@@ -5,6 +5,9 @@ name = "pypi"
 
 [packages]
 django = "*"
+django-rest-framework = "*"
+pymysql = "*"
+dj-database-url = "*"
 
 [dev-packages]
 
