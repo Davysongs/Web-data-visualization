@@ -8,6 +8,18 @@ django = "*"
 django-rest-framework = "*"
 pymysql = "*"
 dj-database-url = "*"
+requests = "*"
+pytest = "*"
+django-debug-toolbar = "*"
+pillow = "*"
+django-login-required-middleware = "*"
+django-use-email-as-username = "*"
+python-dotenv = "*"
+python-decouple = "*"
+six = "*"
+django-auto-logout = "*"
+pytz = "*"
+wheel = "*"
 
 [dev-packages]
 
