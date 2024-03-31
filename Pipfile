@@ -8,6 +8,9 @@ django = "*"
 django-rest-framework = "*"
 pymysql = "*"
 dj-database-url = "*"
+pytz = "*"
+wheel = "*"
+six = "*"
 
 [dev-packages]
 
