@@ -64,17 +64,19 @@ WSGI_APPLICATION = 'base.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'railway',
-        'USER': 'root',
-        'PASSWORD': 'oSriGeiveKUZbMoETIpUBNSJZvjRrYai',
-        'HOST': 'viaduct.proxy.rlwy.net',
-        'PORT': '30221',
+        'ENGINE': 'djongo',
+        'NAME': 'visualdb',  # Replace with your MongoDB database name
+        'ENFORCE_SCHEMA': False,  # Set this to False if you want to disable schema validation
+        'CLIENT': {
+            'host': 'mongodb://mongo:xtVlmLIIEkrKcpfaRvwoianEmrMZWswI@mongodb.railway.internal:27017', 
+
+
+        }
     }
 }
+
 
 
 # Password validation
