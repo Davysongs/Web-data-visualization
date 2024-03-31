@@ -4,3 +4,4 @@ dataport.py
 .env
 Pipfile.lock
 /staticfiles_build/
+/venv
