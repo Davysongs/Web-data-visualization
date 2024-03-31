@@ -12,14 +12,13 @@ requests = "*"
 pytest = "*"
 django-debug-toolbar = "*"
 pillow = "*"
-django-login-required-middleware = "*"
-django-use-email-as-username = "*"
 python-dotenv = "*"
 python-decouple = "*"
 six = "*"
 django-auto-logout = "*"
 pytz = "*"
 wheel = "*"
+mysqlclient = "*"
 
 [dev-packages]
 
