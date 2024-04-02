@@ -157,7 +157,7 @@
                 "sha256:5fb37580dcf4a262f9258c1f4373819aacca906431f505e4688e37f3a99195df"
             ],
             "index": "pypi",
-            "version": "==5.0.3"
+            "version": "==4.2.0"
         },
         "django-auto-logout": {
             "hashes": [

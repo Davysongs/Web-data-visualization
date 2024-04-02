@@ -1,7 +1,6 @@
 jsondata.json
 dataport.py
 /media/
-.env
-Pipfile.lock
 /staticfiles_build/
-/venv
+/venv/
+.env
