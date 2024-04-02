@@ -11,7 +11,7 @@ dj-database-url = "*"
 pytz = "*"
 wheel = "*"
 six = "*"
-djongo = "*"
+pymongo = "*"
 
 [dev-packages]
 

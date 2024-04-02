@@ -1,4 +1,5 @@
 # WEB Data Visualization Application
+This project is a data visualization web application built using Django, MongoDB, HTML, CSS, JavaScript, and the Chart.js library.
 
 ## Overview
 

@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "a07ebd4b5d734696c2b848840e313579a753325f25f4839db04ea8672c036731"
+            "sha256": "392315b92863c781d0e4cded3353a74a3f7f374ce03874d3383abc116b8a5fb5"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -189,14 +189,6 @@
             ],
             "markers": "python_version >= '3.6'",
             "version": "==3.15.1"
-        },
-        "djongo": {
-            "hashes": [
-                "sha256:4479bf78e5a6aba0632006e7b3d691f448b46c98b30e68be7a282d0204191513",
-                "sha256:63d4637500d2c9f066a84ac1a29bfa5f0d7a0b453c577b34d6fb4690ff101dc5"
-            ],
-            "index": "pypi",
-            "version": "==1.2.31"
         },
         "dnspython": {
             "hashes": [
@@ -420,6 +412,7 @@
                 "sha256:f4330c022024e7994b630199cdae909123e4b0e9cf15335de71b146c0f6a2435",
                 "sha256:ff7d1f449fcad23d9bc8e8dc2b9972be38bcd76d99ea5f7d29b2efa929c2a7ff"
             ],
+            "index": "pypi",
             "markers": "python_version >= '3.7'",
             "version": "==4.6.3"
         },

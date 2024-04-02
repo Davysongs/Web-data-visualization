@@ -1,5 +1,4 @@
 from django.contrib import admin
-from .models import MarketInsight
+from .models import collection
 
 # Register your models here.
-admin.site.register(MarketInsight)
