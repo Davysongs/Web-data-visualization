@@ -12,6 +12,7 @@ wheel = "*"
 six = "*"
 gunicorn= "*"
 pymongo = "*"
+whitenoise = "*"
 
 [dev-packages]
 

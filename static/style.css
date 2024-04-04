@@ -1,0 +1,70 @@
+/* Custom CSS for Header Section */
+
+/* Navbar Styling */
+.navbar {
+    background-color: #343a40; /* Dark background color */
+    border-bottom: 1px solid #dee2e6; /* Border bottom */
+}
+
+.navbar-brand {
+    font-size: 24px; /* Brand font size */
+    font-weight: bold; /* Brand font weight */
+}
+
+.navbar-brand:hover {
+    color: #ffffff; /* Brand hover color */
+}
+
+.navbar-toggler-icon {
+    background-color: #ffffff; /* Toggler icon color */
+}
+
+.navbar-nav .nav-link {
+    color: #ffffff; /* Nav link color */
+    font-weight: bold; /* Nav link font weight */
+    margin-right: 20px; /* Nav link right margin */
+}
+
+.navbar-nav .nav-link:hover {
+    color: #f8f9fa; /* Nav link hover color */
+}
+
+/* Active Nav Link */
+.navbar-nav .nav-item.active .nav-link {
+    color: #ffffff; /* Active Nav link color */
+}
+
+/* Active Nav Link Hover */
+.navbar-nav .nav-item.active .nav-link:hover {
+    color: #f8f9fa; /* Active Nav link hover color */
+}
+
+/* Custom CSS for Hero/Main Section */
+
+/* Hero Section Styling */
+.hero {
+    background-color: #f8f9fa; /* Background color */
+    padding: 100px 0; /* Padding top and bottom */
+    text-align: center; /* Center alignment */
+}
+
+.hero-title {
+    font-size: 36px; /* Hero title font size */
+    color: #343a40; /* Hero title color */
+    margin-bottom: 20px; /* Margin bottom */
+}
+
+.hero-subtitle {
+    font-size: 18px; /* Hero subtitle font size */
+    color: #6c757d; /* Hero subtitle color */
+    margin-bottom: 50px; /* Margin bottom */
+}
+
+#chart-container {
+    border: 1px solid #dee2e6; /* Border */
+    border-radius: 5px; /* Border radius */
+    background-color: #ffffff; /* Background color */
+    padding: 20px; /* Padding */
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Box shadow */
+}
+
