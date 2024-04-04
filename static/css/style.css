@@ -78,3 +78,43 @@
     padding: 20px; /* Padding */
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Box shadow */
 }
+/* Custom CSS for Footer */
+
+.footer {
+    background-color: #343a40; /* Background color */
+    color: #ffffff; /* Text color */
+    padding: 50px 0; /* Padding top and bottom */
+}
+
+.footer h4 {
+    color: #ffffff; /* Heading color */
+    font-size: 20px; /* Heading font size */
+    margin-bottom: 20px; /* Margin bottom */
+}
+
+.footer p {
+    margin-bottom: 10px; /* Margin bottom */
+}
+
+.footer ul {
+    list-style-type: none; /* Remove list styles */
+    padding: 0; /* Remove default padding */
+}
+
+.footer ul li {
+    margin-bottom: 10px; /* Margin bottom */
+}
+
+.social-icons li {
+    display: inline-block; /* Display inline */
+    margin-right: 10px; /* Margin right */
+}
+
+.social-icons li:last-child {
+    margin-right: 0; /* Remove margin for last child */
+}
+
+.social-icons a {
+    color: #ffffff; /* Icon color */
+    font-size: 24px; /* Icon font size */
+}
