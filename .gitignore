@@ -1,6 +1,5 @@
 jsondata.json
 dataport.py
 /media/
-/staticfiles_build/
 /venv/
 .env
