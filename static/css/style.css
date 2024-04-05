@@ -118,3 +118,19 @@
     color: #ffffff; /* Icon color */
     font-size: 24px; /* Icon font size */
 }
+
+.dashboard-main {
+    padding: 2rem 0;  /* Adjust padding as needed */
+  }
+  
+  .chart-container {
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+  }
+  
+  .chart-container h2 {
+    margin-bottom: 1rem;
+  }
+  
