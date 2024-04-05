@@ -11,8 +11,8 @@ pytz = "*"
 wheel = "*"
 six = "*"
 gunicorn= "*"
-pymongo = "*"
 whitenoise = "*"
+psycopg2 = "*"
 
 [dev-packages]
 

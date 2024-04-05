@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import collection
+from .models import MarketInsight
 
 # Create your views here.
 def home(request):
