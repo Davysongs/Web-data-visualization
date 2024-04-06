@@ -85,3 +85,47 @@ fetch('/api/market-insights/')
     d3.select(this).select('.tooltip').transition().duration(200).style('opacity', 0).remove();
   });
 })
+
+// Fetch data from the API
+fetch('/api/top-topics-by-region/')
+  .then(response => response.json())
+  .then(data => {
+    // Create a map instance
+    const map = L.map('map-chart').setView([0, 0], 2);
+
+    // Add a tile layer to the map
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors'
+    }).addTo(map);
+
+    // Define an object to store markers by region
+    const markersByRegion = {};
+
+    // Iterate through the data and create markers with checks for geolocation data
+    data.forEach(item => {
+      const { region, topic, latitude, longitude } = item;
+
+      // Check if geolocation data is available, skip if not
+      if (!latitude || !longitude) {
+        console.warn(`Skipping marker creation for region: ${region}, missing geolocation data`);
+        return;
+      }
+
+      // Create a marker for the region with popup content
+      const marker = L.marker([latitude, longitude]).bindPopup(`<b>Region:</b> ${region}<br><b>Topic:</b> ${topic}`);
+
+      // Add the marker to the map
+      marker.addTo(map);
+
+      // Add the marker to the markersByRegion object
+      if (!markersByRegion[region]) {
+        markersByRegion[region] = [];
+      }
+      markersByRegion[region].push(marker);
+    });
+
+    // Add layer control to toggle markers by region
+    L.control.layers(null, markersByRegion, { collapsed: false }).addTo(map);
+  })
+  .catch(error => console.error('Error fetching data:', error));
+
