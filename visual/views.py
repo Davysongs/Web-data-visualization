@@ -1,10 +1,10 @@
 from django.shortcuts import render
 from rest_framework import generics
-from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .models import MarketInsight
 from .serializers import MarketInsightSerializer
-from collections import namedtuple
+from .serializers import RelevanceDistributionSerializer
+from django.db.models import Count
 
 # Create your views here.
 def home(request):
@@ -14,3 +14,9 @@ def home(request):
 class MarketInsightListAPIView(generics.ListAPIView):
     queryset = MarketInsight.objects.all()
     serializer_class = MarketInsightSerializer
+
+
+class RelevanceDistributionAPIView(generics.ListAPIView):
+    queryset = MarketInsight.objects.values('relevance').annotate(count=Count('id'))
+    serializer_class = RelevanceDistributionSerializer
+

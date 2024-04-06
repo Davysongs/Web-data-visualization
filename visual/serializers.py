@@ -5,3 +5,9 @@ class MarketInsightSerializer(serializers.ModelSerializer):
     class Meta:
         model = MarketInsight
         fields = ['id', 'intensity', 'likelihood']
+
+
+class RelevanceDistributionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MarketInsight
+        fields = ['relevance']
