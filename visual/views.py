@@ -2,8 +2,7 @@ from django.shortcuts import render
 from rest_framework import generics
 from rest_framework.response import Response
 from .models import MarketInsight
-from .serializers import MarketInsightSerializer
-from .serializers import RelevanceDistributionSerializer
+from .serializers import MarketInsightSerializer, HeatmapDataSerializer, RelevanceDistributionSerializer
 from django.db.models import Count
 
 # Create your views here.
@@ -20,3 +19,7 @@ class RelevanceDistributionAPIView(generics.ListAPIView):
     queryset = MarketInsight.objects.values('relevance').annotate(count=Count('id'))
     serializer_class = RelevanceDistributionSerializer
 
+
+class HeatmapDataAPIView(generics.ListAPIView):
+    queryset = MarketInsight.objects.values('sector', 'pestle').annotate(count=Count('id'))
+    serializer_class = HeatmapDataSerializer

@@ -11,3 +11,8 @@ class RelevanceDistributionSerializer(serializers.ModelSerializer):
     class Meta:
         model = MarketInsight
         fields = ['relevance']
+
+class HeatmapDataSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MarketInsight
+        fields = ['sector', 'pestle']

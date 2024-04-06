@@ -63,14 +63,26 @@ TEMPLATES = [
 WSGI_APPLICATION = 'base.wsgi.application'
 
 # Database
+# DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.postgresql',
+#        'NAME': 'railway',
+#        'USER':'postgres',
+#        'PASSWORD': 'fzyoGxhyDJALwkIzEwJgEgRFIkQroSzz',
+#        'HOST':'monorail.proxy.rlwy.net',
+#        'PORT':'39541',
+
+#    }
+# }
+
 DATABASES = {
    'default': {
-       'ENGINE': 'django.db.backends.postgresql',
-       'NAME': 'railway',
-       'USER':'postgres',
-       'PASSWORD': 'fzyoGxhyDJALwkIzEwJgEgRFIkQroSzz',
-       'HOST':'monorail.proxy.rlwy.net',
-       'PORT':'39541',
+       'ENGINE': 'django.db.backends.mysql',
+       'NAME': 'visual',
+       'USER':'root',
+       'PASSWORD': '#$(tVA0nr)',
+       'HOST':'127.0.0.1', 
+       'PORT':'3306',
 
    }
 }
