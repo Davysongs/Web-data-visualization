@@ -16,3 +16,8 @@ class HeatmapDataSerializer(serializers.ModelSerializer):
     class Meta:
         model = MarketInsight
         fields = ['sector', 'pestle']
+
+class SectorYearDistributionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = MarketInsight
+        fields = ['sector', 'start_year', 'end_year']

@@ -256,3 +256,88 @@ function createHeatMap(data) {
     .style('text-decoration', 'underline')
     .text('Heat Map (Sector vs. PESTLE)');
 }
+
+// Fetch data from the API endpoint
+// Fetch data from the API endpoint
+fetch('/api/sector-year-distribution/')
+  .then(response => response.json())
+  .then(data => {
+    // Once data is fetched, process it and create stacked bar chart using D3.js
+    createStackedBarChart(data);
+  })
+  .catch(error => {
+    console.error('Error fetching data:', error);
+  });
+
+// Function to create stacked bar chart using D3.js
+function createStackedBarChart(data) {
+  const margin = { top: 20, right: 20, bottom: 40, left: 40 };
+  const width = 500 - margin.left - margin.right;
+  const height = 300 - margin.top - margin.bottom;
+
+  const svg = d3.select('#year-chart')
+    .append('svg')
+    .attr('width', width + margin.left + margin.right)
+    .attr('height', height + margin.top + margin.bottom)
+    .append('g')
+    .attr('transform', `translate(${margin.left},${margin.top})`);
+
+  const sectors = data.map(d => d.sector);
+  const years = [...new Set(data.reduce((acc, cur) => acc.concat(cur.start_year, cur.end_year), []))];
+
+  const color = d3.scaleOrdinal()
+    .domain(sectors)
+    .range(d3.schemeCategory10);
+
+  const stack = d3.stack()
+    .keys(sectors)
+    .order(d3.stackOrderNone)
+    .offset(d3.stackOffsetNone);
+
+  const series = stack(data.map(d => ({
+    ...d,
+    [years[0]]: d.start_year,
+    [years[1]]: d.end_year
+  })));
+
+  const x = d3.scaleBand()
+    .domain(years)
+    .range([0, width])
+    .padding(0.1);
+
+  const y = d3.scaleLinear()
+    .domain([0, d3.max(series, d => d3.max(d, d => d[1]))])
+    .nice()
+    .range([height, 0]);
+
+  svg.selectAll('.serie')
+    .data(series)
+    .enter().append('g')
+    .attr('class', 'serie')
+    .attr('fill', d => color(d.key))
+    .selectAll('rect')
+    .data(d => d)
+    .enter().append('rect')
+    .attr('x', d => x(d.data.start_year === '' ? years[0] : d.data.start_year))
+    .attr('y', d => y(d[1]))
+    .attr('height', d => y(d[0]) - y(d[1]))
+    .attr('width', x.bandwidth());
+
+  svg.append('g')
+    .attr('class', 'axis')
+    .attr('transform', `translate(0,${height})`)
+    .call(d3.axisBottom(x));
+
+  svg.append('g')
+    .attr('class', 'axis')
+    .call(d3.axisLeft(y));
+
+  svg.selectAll('.serie')
+    .data(series)
+    .enter().append('text')
+    .attr('fill', d => color(d.key))
+    .attr('x', width + 5)
+    .attr('y', d => y(d[d.length - 1][1]))
+    .attr('dy', '0.35em')
+    .text(d => d.key);
+}
