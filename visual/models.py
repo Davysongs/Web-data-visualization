@@ -1,24 +1,23 @@
 from django.db import models
 
-# Create your models here.
 class MarketInsight(models.Model):
-  title = models.CharField(max_length=255)
-  sector = models.CharField(max_length=255)
-  topic = models.CharField(max_length=255)
+  end_year = models.CharField(max_length=300, blank=True)
+  intensity = models.IntegerField(null=True, blank=True)
+  sector = models.CharField(max_length=300)
+  topic = models.CharField(max_length=300)
   insight = models.TextField()
-  url = models.URLField(blank=True)  # Allow empty URL
-  region = models.CharField(max_length=255)
-  country = models.CharField(max_length=255)
-  impact = models.CharField(max_length=255, blank=True)  # Allow empty impact
-  pestle = models.CharField(max_length=255, blank=True)  # Allow empty pestle
-  source = models.CharField(max_length=255)
-  likelihood = models.IntegerField()
+  url = models.URLField(max_length=2083, blank=True)  
+  region = models.CharField(max_length=300, blank=True)
+  start_year = models.CharField(max_length=300, blank=True)
+  impact = models.CharField(max_length=300, blank=True)
+  added = models.CharField(max_length=300)
+  published = models.CharField(max_length=300)
+  country = models.CharField(max_length=300)
   relevance = models.IntegerField()
-  intensity = models.IntegerField()
-
-  # Dates with human-readable format
-  published = models.DateTimeField(blank=True)  # Allow empty published date
-  added = models.DateTimeField(blank=True)  # Allow empty added date
+  pestle = models.CharField(max_length=300, blank=True)
+  source = models.CharField(max_length=300)
+  title = models.TextField()
+  likelihood = models.IntegerField(null=True, blank=True)
 
   def __str__(self):
     return self.title
