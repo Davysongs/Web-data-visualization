@@ -1,4 +1,5 @@
 import os
+from dotenv import load_dotenv
 from pathlib import Path
 
 
@@ -10,7 +11,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-!$-9n)-e5t=6a#-e*h^n(l_#h4@^+#n4y)&%sq_wiy(j%n^7l)'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -67,12 +68,12 @@ WSGI_APPLICATION = 'base.wsgi.application'
 
 DATABASES = {
    'default': {
-       'ENGINE': 'django.db.backends.postgresql',
-       'NAME': 'railway',
-       'USER':'postgres',
-       'PASSWORD': 'fzyoGxhyDJALwkIzEwJgEgRFIkQroSzz',
-       'HOST':'monorail.proxy.rlwy.net',
-       'PORT':'39541',
+       'ENGINE': os.getenv('DATABASE_ENGINE'),
+       'NAME': os.getenv('DATABASE_NAME'),
+       'USER':os.getenv('DATABASE_USER'),
+       'PASSWORD': os.getenv('DATABASE_PASSWORD'),
+       'HOST':os.getenv('DATABASE_HOST'),
+       'PORT':os.getenv('DATABASE_PORT'),
 
    }
 }
