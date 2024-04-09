@@ -1,173 +1,76 @@
+// Fetch data from the API
 fetch('/api/market-insights/')
   .then(response => response.json())
   .then(data => {
-    // Filter out data points with missing intensity or likelihood
-    const filteredData = data.filter(insight => insight.intensity !== null && insight.likelihood !== null);
-    const intensityData = filteredData.map(insight => insight.intensity);
-    const likelihoodData = filteredData.map(insight => insight.likelihood);
-    const relevanceData = filteredData.map(insight => insight.relevance);  // Assuming relevance for color coding
-
-    // Create your D3.js chart
-    const svgWidth = 600;
-    const svgHeight = 400;
-    const margin = { top: 20, right: 20, bottom: 30, left: 50 };
-    const width = svgWidth - margin.left - margin.right;
-    const height = svgHeight - margin.top - margin.bottom;
-
-    // Append SVG to the chart container
-    const svg = d3.select('#intensity-likelihood-chart')
-      .append('svg')
-      .attr('width', svgWidth)
-      .attr('height', svgHeight)
-      .append('g')
-      .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
-
-    // Create color scale for relevance
-    const colorScale = d3.scaleLinear()
-      .domain([0, d3.max(relevanceData)])  // Assuming relevance between 0 and max
-      .range(['lightblue', 'darkblue']);  // Color range for relevance
-
-    // Create scales for x and y axes
-    const xScale = d3.scaleLinear().domain([0, d3.max(intensityData)]).range([0, width]);
-    const yScale = d3.scaleLinear().domain([0, d3.max(likelihoodData)]).range([height, 0]);
-
-    // Create x and y axes
-    const xAxis = d3.axisBottom().scale(xScale);
-    const yAxis = d3.axisLeft().scale(yScale);
-
-    // Append x axis to the SVG
-    svg.append('g')
-      .attr('transform', 'translate(0,' + height + ')')
-      .call(xAxis)
-      .append('text')
-      .attr('class', 'axis-label')
-      .attr('x', width / 2)
-      .attr('y', margin.bottom - 10)
-      .text('Intensity');
-
-    // Append y axis to the SVG
-    svg.append('g')
-      .call(yAxis)
-      .append('text')
-      .attr('class', 'axis-label')
-      .attr('transform', 'rotate(-90)')
-      .attr('x', -height / 2)
-      .attr('y', -margin.left + 20)
-      .text('Likelihood');
-
-    // Create circles for each data point with tooltips
-    svg.selectAll('circle')
-  .data(filteredData)
-  .enter()
-  .append('circle')
-  .attr('cx', d => xScale(d.intensity))
-  .attr('cy', d => yScale(d.likelihood))
-  .attr('r', 5)
-  .attr('fill', d => colorScale(d.relevance))  // Color based on relevance
-  // Add tooltip on hover (without nested event handler)
-  .on('mouseover', function(d) {
-    const tooltip = d3.select(this).append('div')
-      .attr('class', 'tooltip')
-      .style('opacity', 0);
-
-    tooltip.html(`
-      Intensity: ${d.intensity} <br>
-      Likelihood: ${d.likelihood} <br>
-      Relevance: ${d.relevance}
-    `)
-      .style('left', (d3.event.pageX + 10) + 'px')
-      .style('top', (d3.event.pageY + 10) + 'px')
-      .transition()
-      .duration(200)
-      .style('opacity', 0.9);
-  })
-  .on('mouseout', function() {
-    d3.select(this).select('.tooltip').transition().duration(200).style('opacity', 0).remove();
-  });
-})
-
-// Fetch data from the API
-// Fetch data from the API endpoint
-fetch('/api/relevance-distribution/')
-  .then(response => response.json())
-  .then(data => {
-    // Once data is fetched, process it and create bar chart using D3.js
+    // Process data and create the chart
     createBarChart(data);
   })
   .catch(error => {
     console.error('Error fetching data:', error);
   });
 
-// Function to create bar chart using D3.js
+// Function to create the bar chart
 function createBarChart(data) {
-  // Define the dimensions and margins for the plot
-  const margin = { top: 20, right: 20, bottom: 40, left: 40 };
-  const width = 500 - margin.left - margin.right;
-  const height = 300 - margin.top - margin.bottom;
+    // Declare the chart dimensions and margins.
+    var width = document.querySelector('.chart-wrapper').clientWidth;
+    var height = document.querySelector('.chart-wrapper').clientHeight;
+// Use svgWidth and svgHeight variables when creating the SVG
 
-  // Append SVG element to the container
-  const svg = d3.select('#bar-chart')
+    const marginTop = 20;
+    const marginRight = 5;
+    const marginBottom = 30;
+    const marginLeft = 10;
+  
+    // Declare the x (horizontal position) scale.
+    const x = d3.scaleBand()
+        .domain(d3.groupSort(data, ([d]) => -d.intensity, (d) => d.likelihood)) // descending intensity
+        .range([marginLeft, width - marginRight])
+        .padding(0.1);
+    
+    // Declare the y (vertical position) scale.
+    const y = d3.scaleLinear()
+        .domain([0, d3.max(data, (d) => d.intensity)])
+        .range([height - marginBottom, marginTop]);
+  
+    // Create the SVG container.
+    const svg = d3.select('#likelihood-intensity-chart')
     .append('svg')
-    .attr('width', width + margin.left + margin.right)
-    .attr('height', height + margin.top + margin.bottom)
+    .attr('width', width + marginLeft + marginRight)
+    .attr('height', height + marginTop + marginBottom)
     .append('g')
-    .attr('transform', `translate(${margin.left},${margin.top})`);
+    .attr('transform', `translate(${marginLeft},${marginTop})`);
 
-  // Define scales for x and y axes
-  const xScale = d3.scaleBand()
-    .domain(data.map(d => d.relevance))
-    .range([0, width])
-    .padding(0.1);
-
-  const yScale = d3.scaleLinear()
-    .domain([0, d3.max(data, d => d.count)])
-    .range([height, 0]);
-
-  // Create bars for each data point
-  svg.selectAll('rect')
-    .data(data)
-    .enter()
-    .append('rect')
-    .attr('x', d => xScale(d.relevance))
-    .attr('y', d => yScale(d.count))
-    .attr('width', xScale.bandwidth())
-    .attr('height', d => height - yScale(d.count))
-    .attr('fill', 'steelblue');
-
-  // Add x-axis
-  svg.append('g')
-    .attr('transform', `translate(0,${height})`)
-    .call(d3.axisBottom(xScale));
-
-  // Add y-axis
-  svg.append('g')
-    .call(d3.axisLeft(yScale));
-
-  // Add x-axis label
-  svg.append('text')
-    .attr('transform', `translate(${width / 2},${height + margin.top + 10})`)
-    .style('text-anchor', 'middle')
-    .text('Relevance');
-
-  // Add y-axis label
-  svg.append('text')
-    .attr('transform', 'rotate(-90)')
-    .attr('y', 0 - margin.left)
-    .attr('x', 0 - (height / 2))
-    .attr('dy', '1em')
-    .style('text-anchor', 'middle')
-    .text('Count');
-
-  // Add chart title
-  svg.append('text')
-    .attr('x', width / 2)
-    .attr('y', 0 - (margin.top / 2))
-    .attr('text-anchor', 'middle')
-    .style('font-size', '16px')
-    .style('text-decoration', 'underline')
-    .text('Bar Chart (Relevance Distribution)');
+    // Add a rect for each bar.
+    svg.append("g")
+        .attr("fill", "steelblue")
+      .selectAll()
+      .data(data)
+      .join("rect")
+        .attr("x", (d) => x(d.likelihood))
+        .attr("y", (d) => y(d.intensity))
+        .attr("height", (d) => y(0) - y(d.intensity))
+        .attr("width", x.bandwidth());
+  
+    // Add the x-axis and label.
+    svg.append("g")
+        .attr("transform", `translate(0,${height - marginBottom})`)
+        .call(d3.axisBottom(x).tickSizeOuter(0));
+  
+    // Add the y-axis and label, and remove the domain line.
+    svg.append("g")
+        .attr("transform", `translate(${marginLeft},0)`)
+        .call(d3.axisLeft(y).tickFormat((y) => (y * 100).toFixed()))
+        .call(g => g.select(".domain").remove())
+        .call(g => g.append("text")
+            .attr("x", -marginLeft)
+            .attr("y", 10)
+            .attr("fill", "currentColor")
+            .attr("text-anchor", "start")
+            .text("↑ intensity (%)"));
+  
+    // Return the SVG element.
+    return svg.node();
 }
-
 // Fetch data from the API endpoint
 fetch('/api/heatmap-data/')
   .then(response => response.json())
@@ -255,89 +158,4 @@ function createHeatMap(data) {
     .style('font-size', '16px')
     .style('text-decoration', 'underline')
     .text('Heat Map (Sector vs. PESTLE)');
-}
-
-// Fetch data from the API endpoint
-// Fetch data from the API endpoint
-fetch('/api/sector-year-distribution/')
-  .then(response => response.json())
-  .then(data => {
-    // Once data is fetched, process it and create stacked bar chart using D3.js
-    createStackedBarChart(data);
-  })
-  .catch(error => {
-    console.error('Error fetching data:', error);
-  });
-
-// Function to create stacked bar chart using D3.js
-function createStackedBarChart(data) {
-  const margin = { top: 20, right: 20, bottom: 40, left: 40 };
-  const width = 500 - margin.left - margin.right;
-  const height = 300 - margin.top - margin.bottom;
-
-  const svg = d3.select('#year-chart')
-    .append('svg')
-    .attr('width', width + margin.left + margin.right)
-    .attr('height', height + margin.top + margin.bottom)
-    .append('g')
-    .attr('transform', `translate(${margin.left},${margin.top})`);
-
-  const sectors = data.map(d => d.sector);
-  const years = [...new Set(data.reduce((acc, cur) => acc.concat(cur.start_year, cur.end_year), []))];
-
-  const color = d3.scaleOrdinal()
-    .domain(sectors)
-    .range(d3.schemeCategory10);
-
-  const stack = d3.stack()
-    .keys(sectors)
-    .order(d3.stackOrderNone)
-    .offset(d3.stackOffsetNone);
-
-  const series = stack(data.map(d => ({
-    ...d,
-    [years[0]]: d.start_year,
-    [years[1]]: d.end_year
-  })));
-
-  const x = d3.scaleBand()
-    .domain(years)
-    .range([0, width])
-    .padding(0.1);
-
-  const y = d3.scaleLinear()
-    .domain([0, d3.max(series, d => d3.max(d, d => d[1]))])
-    .nice()
-    .range([height, 0]);
-
-  svg.selectAll('.serie')
-    .data(series)
-    .enter().append('g')
-    .attr('class', 'serie')
-    .attr('fill', d => color(d.key))
-    .selectAll('rect')
-    .data(d => d)
-    .enter().append('rect')
-    .attr('x', d => x(d.data.start_year === '' ? years[0] : d.data.start_year))
-    .attr('y', d => y(d[1]))
-    .attr('height', d => y(d[0]) - y(d[1]))
-    .attr('width', x.bandwidth());
-
-  svg.append('g')
-    .attr('class', 'axis')
-    .attr('transform', `translate(0,${height})`)
-    .call(d3.axisBottom(x));
-
-  svg.append('g')
-    .attr('class', 'axis')
-    .call(d3.axisLeft(y));
-
-  svg.selectAll('.serie')
-    .data(series)
-    .enter().append('text')
-    .attr('fill', d => color(d.key))
-    .attr('x', width + 5)
-    .attr('y', d => y(d[d.length - 1][1]))
-    .attr('dy', '0.35em')
-    .text(d => d.key);
 }
