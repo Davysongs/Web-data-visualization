@@ -1,9 +1,3 @@
-window.onresize = function() {
-  // Code to execute when screen size changes (e.g., reload page)
-  location.reload();
-}
-
-
 // Declare the chart dimensions and margins.
   var width = document.querySelector('.chart-wrapper').clientWidth;
   var height = document.querySelector('.chart-wrapper').clientHeight;
