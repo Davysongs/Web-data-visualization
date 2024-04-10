@@ -44,42 +44,100 @@
     </header>
     <!-- Main Content Section -->
     <main>
-      <section class="hero">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-12">
-              <h1 class="hero-title">Market Insight</h1>
-              <p class="hero-subtitle">Welcome to your data visualization dashboard</p>
-            </div>
+      <div class="container-fluid">
+        <div class="row">
+          <!-- Filter Widget Container -->
+          <div class="col-md-3 filter-widget">
+            <h2>Filter Data</h2>
+            <!-- Add your filter inputs here -->
+            <form id="filter-form">
+              <!-- Topics Filter -->
+              <div class="form-group">
+                <label for="topics">Topics:</label>
+                <input type="text" id="topics" name="topics" class="form-control" placeholder="Enter topic">
+              </div>
+              <!-- Sector Filter -->
+              <div class="form-group">
+                <label for="sector">Sector:</label>
+                <input type="text" id="sector" name="sector" class="form-control" placeholder="Enter sector">
+              </div>
+              <!-- Region Filter -->
+              <div class="form-group">
+                <label for="region">Region:</label>
+                <input type="text" id="region" name="region" class="form-control" placeholder="Enter region">
+              </div>
+              <!-- PEST Filter -->
+              <div class="form-group">
+                <label for="pest">PEST:</label>
+                <input type="text" id="pest" name="pest" class="form-control" placeholder="Enter PEST">
+              </div>
+              <!-- Source Filter -->
+              <div class="form-group">
+                <label for="source">Source:</label>
+                <input type="text" id="source" name="source" class="form-control" placeholder="Enter source">
+              </div>
+              <!-- SWOT Filter -->
+              <div class="form-group">
+                <label for="swot">SWOT:</label>
+                <input type="text" id="swot" name="swot" class="form-control" placeholder="Enter SWOT">
+              </div>
+              <!-- Country Filter -->
+              <div class="form-group">
+                <label for="country">Country:</label>
+                <input type="text" id="country" name="country" class="form-control" placeholder="Enter country">
+              </div>
+              <!-- City Filter -->
+              <div class="form-group">
+                <label for="city">City:</label>
+                <input type="text" id="city" name="city" class="form-control" placeholder="Enter city">
+              </div>
+              <!-- Submit Button -->
+              <button type="submit" class="btn btn-primary">Apply Filters</button>
+            </form>
           </div>
-          <div class="container-fluid dashboard-main">
-            <div class="row">
-              <div class="col-md-12 chart-container">
-                <h2>Likelihood vs. Intensity Distribution</h2>
-                <div class="chart-wrapper">
-                  <div id="likelihood-intensity-chart"></div>
+           <!-- End of Filter Widget Container -->
+          <!-- Main Content Section -->
+          <div class="col-md-9">
+            <section class="hero">
+              <div class="container">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <h1 class="hero-title">Market Insight</h1>
+                    <p class="hero-subtitle">Welcome to your data visualization dashboard</p>
+                  </div>
                 </div>
+                <div class="container-fluid dashboard-main">
+                  <div class="row">
+                    <div class="col-md-12 chart-container">
+                      <h2>Likelihood vs. Intensity Distribution</h2>
+                      <div class="chart-wrapper">
+                        <div id="likelihood-intensity-chart"></div>
+                      </div>
+                    </div>
+                  </div>                
+                  <div class="row">
+                    <div class="col-md-12 chart-container">
+                      <h2>Bar Chart (Relevance Distribution)</h2>
+                      <div class="chart-wrapper">
+                        <div id="bar-chart"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12 chart-container">
+                      <h2>Relevance Histogram</h2>
+                      <div class="chart-wrapper">
+                        <div id="histogram"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>                  
               </div>
-            </div>                
-            <div class="row">
-              <div class="col-md-12 chart-container">
-                <h2>Bar Chart (Relevance Distribution)</h2>
-                <div class="chart-wrapper">
-                  <div id="bar-chart"></div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12 chart-container">
-                <h2>Relevance Histogram</h2>
-                <div class="chart-wrapper">
-                  <div id="histogram"></div>
-                </div>
-              </div>
-            </div>
-          </div>                  
+            </section>
+          </div>
+          <!-- End of Main Content Section -->
         </div>
-      </section>
+      </div>
     </main>
     <footer class="footer">
       <div class="container">

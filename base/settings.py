@@ -65,29 +65,29 @@ WSGI_APPLICATION = 'base.wsgi.application'
 #Database
 
 
-# DATABASES = {
-#    'default': {
-#        'ENGINE': os.getenv('DATABASE_ENGINE'),
-#        'NAME': os.getenv('DATABASE_NAME'),
-#        'USER':os.getenv('DATABASE_USER'),
-#        'PASSWORD': os.getenv('DATABASE_PASSWORD'),
-#        'HOST':os.getenv('DATABASE_HOST'),
-#        'PORT':os.getenv('DATABASE_PORT'),
-
-#    }
-# }
-
 DATABASES = {
    'default': {
-       'ENGINE': 'django.db.backends.mysql',
-       'NAME': 'visual',
-       'USER':'root',
-       'PASSWORD': '#$(tVA0nr)',
-       'HOST':'127.0.0.1', 
-       'PORT':'3306',
+       'ENGINE': os.getenv('DATABASE_ENGINE'),
+       'NAME': os.getenv('DATABASE_NAME'),
+       'USER':os.getenv('DATABASE_USER'),
+       'PASSWORD': os.getenv('DATABASE_PASSWORD'),
+       'HOST':os.getenv('DATABASE_HOST'),
+       'PORT':os.getenv('DATABASE_PORT'),
 
    }
 }
+
+# DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.mysql',
+#        'NAME': 'visual',
+#        'USER':'root',
+#        'PASSWORD': '#$(tVA0nr)',
+#        'HOST':'127.0.0.1', 
+#        'PORT':'3306',
+
+#    }
+# }
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 

@@ -1,3 +1,35 @@
+// Function to handle form submission and apply filters
+function applyFilters(event) {
+  event.preventDefault(); // Prevent form submission
+
+  // Get filter values entered by the user
+  const topics = document.getElementById('topics').value;
+  const sector = document.getElementById('sector').value;
+  const region = document.getElementById('region').value;
+  const pest = document.getElementById('pest').value;
+  const source = document.getElementById('source').value;
+  const swot = document.getElementById('swot').value;
+  const country = document.getElementById('country').value;
+  const city = document.getElementById('city').value;
+
+  // Construct URL with filter parameters
+  const url = `/api/market-insights/?topics=${topics}&sector=${sector}&region=${region}&pest=${pest}&source=${source}&swot=${swot}&country=${country}&city=${city}`;
+
+  // Make AJAX request to fetch filtered data
+  fetch(url)
+    .then(response => response.json())
+    .then(data => {
+      // Process the filtered data (e.g., update UI with filtered data)
+      console.log('Filtered data:', data);
+      // Call a function to update UI with filtered data (e.g., render charts)
+    })
+    .catch(error => console.error('Error fetching filtered data:', error));
+}
+
+// Event listener to trigger filter application on form submission
+document.getElementById('filter-form').addEventListener('submit', applyFilters);
+
+
 // Declare the chart dimensions and margins.
   var width = document.querySelector('.chart-wrapper').clientWidth;
   var height = document.querySelector('.chart-wrapper').clientHeight;
