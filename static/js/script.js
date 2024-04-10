@@ -1,7 +1,8 @@
-window.addEventListener('resize', function() {
-  // Refresh the page
+window.onresize = function() {
+  // Code to execute when screen size changes (e.g., reload page)
   location.reload();
-});
+}
+
 
 // Declare the chart dimensions and margins.
   var width = document.querySelector('.chart-wrapper').clientWidth;
@@ -92,7 +93,7 @@ function createHistogram(data){
   const marginTop = 20;
   const marginRight = 15;
   const marginBottom = 20;
-  const marginLeft = 5;
+  const marginLeft = 15;
 
   // Bin the data.
   const bins = d3.bin()
