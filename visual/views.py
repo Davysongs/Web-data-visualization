@@ -11,11 +11,10 @@ def home(request):
 
 '''Filters'''
 class MarketInsightFilterAPIView(generics.ListAPIView):
-    queryset = MarketInsight.objects.all()
     serializer_class = MarketInsightSerializer
 
     def get_queryset(self):
-        queryset = self.queryset
+        queryset = MarketInsight.objects.all()  # Use .all() instead of accessing queryset attribute directly
         serializer = MarketInsightFilterSerializer(data=self.request.query_params)
 
         if serializer.is_valid():

@@ -1,6 +1,44 @@
+// Function to handle form submission
+function handleFormSubmit(event) {
+  event.preventDefault(); // Prevent default form submission behavior
+
+  // Get form input values
+  const topics = document.getElementById('topics').value.trim();
+  const sector = document.getElementById('sector').value.trim();
+  const region = document.getElementById('region').value.trim();
+  const pest = document.getElementById('pest').value.trim();
+  const source = document.getElementById('source').value.trim();
+  const swot = document.getElementById('swot').value.trim();
+  const country = document.getElementById('country').value.trim();
+  const city = document.getElementById('city').value.trim();
+
+  // Construct URL with form inputs as query parameters
+  const url = `/api/market-insights/filter/?topics=${topics}&sector=${sector}&region=${region}&pest=${pest}&source=${source}&swot=${swot}&country=${country}&city=${city}`;
+
+  // Fetch data from the API
+  fetch(url)
+      .then(response => {
+          if (!response.ok) {
+              throw new Error('Network response was not ok');
+          }
+          return response.json(); // Parse JSON response
+      })
+      .then(data => {
+          // Handle the retrieved data
+          console.log('Retrieved data:', data);
+          // Call a function to process the retrieved data, e.g., render it on the page
+      })
+      .catch(error => {
+          // Handle errors
+          console.error('Error fetching data:', error);
+      });
+}
+
 // Declare the chart dimensions and margins.
-  var width = document.querySelector('.chart-wrapper').clientWidth;
-  var height = document.querySelector('.chart-wrapper').clientHeight;
+var width = document.querySelector('.chart-wrapper').clientWidth;
+var height = document.querySelector('.chart-wrapper').clientHeight;
+// Add event listener to form submission
+document.getElementById('filterForm').addEventListener('submit', handleFormSubmit);
 
 // Fetch data from the API
 fetch('/api/market-insights/')
@@ -16,7 +54,6 @@ fetch('/api/market-insights/')
 // Function to create the bar chart
 function createBarChart(data) {
 // Use svgWidth and svgHeight variables when creating the SVG
-
     const marginTop = 20;
     const marginRight = 5;
     const marginBottom = 30;
