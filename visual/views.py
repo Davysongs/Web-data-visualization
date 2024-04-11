@@ -9,74 +9,44 @@ from django.db.models import Count
 def home(request):
     return render(request, 'home.html')
 
-'''filters'''
+'''Filters'''
 class MarketInsightFilterAPIView(generics.ListAPIView):
     queryset = MarketInsight.objects.all()
-    serializer_class = MarketInsightFilterSerializer
-
-class MarketInsightTopicsFilterAPIView(generics.ListAPIView):
-    serializer_class = MarketInsightTopicsFilterSerializer
+    serializer_class = MarketInsightSerializer
 
     def get_queryset(self):
-        topic = self.request.query_params.get('topic', '')
-        queryset = MarketInsight.objects.filter(topic__icontains=topic)
+        queryset = self.queryset
+        serializer = MarketInsightFilterSerializer(data=self.request.query_params)
+
+        if serializer.is_valid():
+            # Get validated data
+            filters = serializer.validated_data
+
+            # Apply filters
+            if 'topics' in filters:
+                queryset = queryset.filter(topic__in=filters['topics'])
+            if 'sector' in filters:
+                queryset = queryset.filter(sector=filters['sector'])
+            if 'region' in filters:
+                queryset = queryset.filter(region=filters['region'])
+            if 'pest' in filters:
+                queryset = queryset.filter(pestle=filters['pest'])
+            if 'source' in filters:
+                queryset = queryset.filter(source=filters['source'])
+            if 'swot' in filters:
+                queryset = queryset.filter(swot=filters['swot'])
+            if 'country' in filters:
+                queryset = queryset.filter(country=filters['country'])
+            if 'city' in filters:
+                queryset = queryset.filter(city=filters['city'])
+
         return queryset
 
-class MarketInsightSectorFilterAPIView(generics.ListAPIView):
-    serializer_class = MarketInsightSectorFilterSerializer
+    def list(self, request, *args, **kwargs):
+        queryset = self.get_queryset()
+        serializer = self.serializer_class(queryset, many=True)
+        return Response(serializer.data)
 
-    def get_queryset(self):
-        sector = self.request.query_params.get('sector', '')
-        queryset = MarketInsight.objects.filter(sector__icontains=sector)
-        return queryset
-
-class MarketInsightRegionFilterAPIView(generics.ListAPIView):
-    serializer_class = MarketInsightRegionFilterSerializer
-
-    def get_queryset(self):
-        region = self.request.query_params.get('region', '')
-        queryset = MarketInsight.objects.filter(region__icontains=region)
-        return queryset
-
-class MarketInsightPESTFilterAPIView(generics.ListAPIView):
-    serializer_class = MarketInsightPESTFilterSerializer
-
-    def get_queryset(self):
-        pestle = self.request.query_params.get('pestle', '')
-        queryset = MarketInsight.objects.filter(pestle__icontains=pestle)
-        return queryset
-
-class MarketInsightSourceFilterAPIView(generics.ListAPIView):
-    serializer_class = MarketInsightSourceFilterSerializer
-
-    def get_queryset(self):
-        source = self.request.query_params.get('source', '')
-        queryset = MarketInsight.objects.filter(source__icontains=source)
-        return queryset
-
-class MarketInsightSWOTFilterAPIView(generics.ListAPIView):
-    serializer_class = MarketInsightSWOTFilterSerializer
-
-    def get_queryset(self):
-        swot = self.request.query_params.get('swot', '')
-        queryset = MarketInsight.objects.filter(swot__icontains=swot)
-        return queryset
-
-class MarketInsightCountryFilterAPIView(generics.ListAPIView):
-    serializer_class = MarketInsightCountryFilterSerializer
-
-    def get_queryset(self):
-        country = self.request.query_params.get('country', '')
-        queryset = MarketInsight.objects.filter(country__icontains=country)
-        return queryset
-
-class MarketInsightCityFilterAPIView(generics.ListAPIView):
-    serializer_class = MarketInsightCityFilterSerializer
-
-    def get_queryset(self):
-        city = self.request.query_params.get('city', '')
-        queryset = MarketInsight.objects.filter(city__icontains=city)
-        return queryset
 '''Charts and  Graphs API Views'''
 class MarketInsightListAPIView(generics.ListAPIView):
     queryset = MarketInsight.objects.all()

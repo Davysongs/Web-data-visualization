@@ -2,33 +2,15 @@
 from rest_framework import serializers
 from .models import MarketInsight
 
-class MarketInsightTopicsFilterSerializer(serializers.Serializer):
-    topic = serializers.CharField(max_length=300)
-
-class MarketInsightSectorFilterSerializer(serializers.Serializer):
-    sector = serializers.CharField(max_length=300)
-
-class MarketInsightRegionFilterSerializer(serializers.Serializer):
-    region = serializers.CharField(max_length=300)
-
-class MarketInsightPESTFilterSerializer(serializers.Serializer):
-    pestle = serializers.CharField(max_length=300)
-
-class MarketInsightSourceFilterSerializer(serializers.Serializer):
-    source = serializers.CharField(max_length=300)
-
-class MarketInsightSWOTFilterSerializer(serializers.Serializer):
-    swot = serializers.CharField(max_length=300)
-
-class MarketInsightCountryFilterSerializer(serializers.Serializer):
-    country = serializers.CharField(max_length=300)
-
-class MarketInsightCityFilterSerializer(serializers.Serializer):
-    city = serializers.CharField(max_length=300)
-
 class MarketInsightFilterSerializer(serializers.Serializer):
-    end_year = serializers.CharField(max_length=300)  # Serializer for end year filter
-
+    topics = serializers.ListField(child=serializers.CharField(), allow_empty=True, required=False)
+    sector = serializers.CharField(allow_blank=True, required=False)
+    region = serializers.CharField(allow_blank=True, required=False)
+    pest = serializers.CharField(allow_blank=True, required=False)
+    source = serializers.CharField(allow_blank=True, required=False)
+    swot = serializers.CharField(allow_blank=True, required=False)
+    country = serializers.CharField(allow_blank=True, required=False)
+    city = serializers.CharField(allow_blank=True, required=False)
 class MarketInsightSerializer(serializers.ModelSerializer):
     class Meta:
         model = MarketInsight
