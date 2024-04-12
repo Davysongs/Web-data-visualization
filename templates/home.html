@@ -50,38 +50,12 @@
           <div class="col-md-3 filter-widget">
             <h2>Filter Data</h2>
             <!-- Add your filter inputs here -->
-            <form id="filterForm">
-              <div class="form-group">
-                <label for="topics">Topics:</label>
-                <input type="text" class="form-control" id="topics" name="topics" placeholder="Enter topics">
-              </div>
-              <div class="form-group">
-                <label for="sector">Sector:</label>
-                <input type="text" class="form-control" id="sector" name="sector" placeholder="Enter sector">
-              </div>
-              <div class="form-group">
-                <label for="region">Region:</label>
-                <input type="text" class="form-control" id="region" name="region" placeholder="Enter region">
-              </div>
-              <div class="form-group">
-                <label for="pest">PEST:</label>
-                <input type="text" class="form-control" id="pest" name="pest" placeholder="Enter PEST">
-              </div>
-              <div class="form-group">
-                <label for="source">Source:</label>
-                <input type="text" class="form-control" id="source" name="source" placeholder="Enter source">
-              </div>
-              <div class="form-group">
-                <label for="swot">SWOT:</label>
-                <input type="text" class="form-control" id="swot" name="swot" placeholder="Enter SWOT">
-              </div>
-              <div class="form-group">
-                <label for="country">Country:</label>
-                <input type="text" class="form-control" id="country" name="country" placeholder="Enter country">
-              </div>
-              <div class="form-group">
-                <label for="city">City:</label>
-                <input type="text" class="form-control" id="city" name="city" placeholder="Enter city">
+            <form id="searchForm">
+              <div class="row mb-3">
+                <div class="col-md-4">
+                  <label for="search" class="form-label">Search Term:</label>
+                  <input type="text" class="form-control" id="search" name="search" placeholder="Enter search keywords">
+                </div>
               </div>
               <button type="submit" class="btn btn-primary">Search</button>
             </form>
@@ -100,20 +74,20 @@
                 <div class="container-fluid dashboard-main">
                   <div class="row">
                     <div class="col-md-12 chart-container">
-                      <h2>Likelihood vs. Intensity Distribution</h2>
-                      <div class="chart-wrapper">
-                        <div id="likelihood-intensity-chart"></div>
-                      </div>
-                    </div>
-                  </div>                
-                  <div class="row">
-                    <div class="col-md-12 chart-container">
                       <h2>Bar Chart (Relevance Distribution)</h2>
                       <div class="chart-wrapper">
                         <div id="bar-chart"></div>
                       </div>
                     </div>
                   </div>
+                  <div class="row">
+                    <div class="col-md-12 chart-container">
+                      <h2>Likelihood vs. Intensity Distribution</h2>
+                      <div class="chart-wrapper">
+                        <div id="likelihood-intensity-chart"></div>
+                      </div>
+                    </div>
+                  </div>               
                   <div class="row">
                     <div class="col-md-12 chart-container">
                       <h2>Relevance Histogram</h2>

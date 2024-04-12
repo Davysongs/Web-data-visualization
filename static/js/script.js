@@ -1,44 +1,48 @@
 // Function to handle form submission
-function handleFormSubmit(event) {
-  event.preventDefault(); // Prevent default form submission behavior
+const searchForm = document.getElementById('searchForm');
+const searchInput = document.getElementById('search');
 
-  // Get form input values
-  const topics = document.getElementById('topics').value.trim();
-  const sector = document.getElementById('sector').value.trim();
-  const region = document.getElementById('region').value.trim();
-  const pest = document.getElementById('pest').value.trim();
-  const source = document.getElementById('source').value.trim();
-  const swot = document.getElementById('swot').value.trim();
-  const country = document.getElementById('country').value.trim();
-  const city = document.getElementById('city').value.trim();
+searchForm.addEventListener('submit', (event) => {
+  event.preventDefault();
 
-  // Construct URL with form inputs as query parameters
-  const url = `/api/market-insights/filter/?topics=${topics}&sector=${sector}&region=${region}&pest=${pest}&source=${source}&swot=${swot}&country=${country}&city=${city}`;
+  // Get search term from the input field
+  const searchTerm = searchInput.value.trim(); // Trim any leading/trailing whitespaces
 
-  // Fetch data from the API
-  fetch(url)
-      .then(response => {
-          if (!response.ok) {
-              throw new Error('Network response was not ok');
-          }
-          return response.json(); // Parse JSON response
-      })
-      .then(data => {
-          // Handle the retrieved data
-          console.log('Retrieved data:', data);
-          // Call a function to process the retrieved data, e.g., render it on the page
-      })
-      .catch(error => {
-          // Handle errors
-          console.error('Error fetching data:', error);
-      });
-}
+  // Validate search term 
+  if (!searchTerm) {
+    alert('Please enter a search term.');
+    return;
+  }
+
+  // Construct the API request URL with the search parameter
+  const url = new URL('/api/market-insights/filter/', window.location.origin);
+  url.searchParams.append('search', searchTerm);
+
+  // Send the GET request using Fetch API
+  fetch(url, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json' // Optional header for JSON data
+    }
+  })
+  .then(response => response.json())
+  .then(data => {
+    // Process the received JSON data (e.g., display search results)
+    console.log(data);
+    // Replace with your logic to handle and display the search results
+    // You can update the DOM, create a table, or use a templating library
+  })
+  .catch(error => {
+    console.error(error);
+    // Handle any errors during the request
+    alert('An error occurred while fetching data. Please try again later.');
+  });
+});
 
 // Declare the chart dimensions and margins.
 var width = document.querySelector('.chart-wrapper').clientWidth;
 var height = document.querySelector('.chart-wrapper').clientHeight;
 // Add event listener to form submission
-document.getElementById('filterForm').addEventListener('submit', handleFormSubmit);
 
 // Fetch data from the API
 fetch('/api/market-insights/')

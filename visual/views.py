@@ -4,48 +4,35 @@ from rest_framework.response import Response
 from .models import MarketInsight
 from .serializers import *
 from django.db.models import Count
+from rest_framework.views import APIView
+from rest_framework import status
 
 # Create your views here.
 def home(request):
     return render(request, 'home.html')
 
 '''Filters'''
-class MarketInsightFilterAPIView(generics.ListAPIView):
-    serializer_class = MarketInsightSerializer
+class FilterMarketInsightsView(APIView):
+  """
+  API view to filter MarketInsight data based on query parameters.
+  """
+  def get(self, request):
+    # Get filter parameters from query string
+    serializer = MarketInsightFilterSerializer(data=request.query_params)
 
-    def get_queryset(self):
-        queryset = MarketInsight.objects.all()  # Use .all() instead of accessing queryset attribute directly
-        serializer = MarketInsightFilterSerializer(data=self.request.query_params)
+    # Validate filter data (already handled by serializer)
+    if not serializer.is_valid():
+      return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-        if serializer.is_valid():
-            # Get validated data
-            filters = serializer.validated_data
+    # Get filtered queryset based on validated serializer data
+    filtered_insights = serializer.get_queryset()
 
-            # Apply filters
-            if 'topics' in filters:
-                queryset = queryset.filter(topic__in=filters['topics'])
-            if 'sector' in filters:
-                queryset = queryset.filter(sector=filters['sector'])
-            if 'region' in filters:
-                queryset = queryset.filter(region=filters['region'])
-            if 'pest' in filters:
-                queryset = queryset.filter(pestle=filters['pest'])
-            if 'source' in filters:
-                queryset = queryset.filter(source=filters['source'])
-            if 'swot' in filters:
-                queryset = queryset.filter(swot=filters['swot'])
-            if 'country' in filters:
-                queryset = queryset.filter(country=filters['country'])
-            if 'city' in filters:
-                queryset = queryset.filter(city=filters['city'])
+    # Serialize filtered data
+    serialized_data = MarketInsightSerializer(filtered_insights, many=True)
 
-        return queryset
-
-    def list(self, request, *args, **kwargs):
-        queryset = self.get_queryset()
-        serializer = self.serializer_class(queryset, many=True)
-        return Response(serializer.data)
-
+    # Return JSON response with filtered data
+    return Response(serialized_data.data)
+  
 '''Charts and  Graphs API Views'''
 class MarketInsightListAPIView(generics.ListAPIView):
     queryset = MarketInsight.objects.all()

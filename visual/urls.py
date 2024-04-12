@@ -7,5 +7,5 @@ urlpatterns = [
     path('api/sector-year-distribution/', SectorYearDistributionAPIView.as_view(), name='sector_year_distribution'),
     path('api/market-insights/histogram/', MarketInsightHistogramAPIView.as_view(), name='market_insight_histogram'),
      #filters 
-    path('api/market-insights/filter/', MarketInsightFilterAPIView.as_view(), name='market_insight_filter'),
+    path('api/filter-market-insights/', FilterMarketInsightsView.as_view(), name='market_insight_filter'),
 ]
