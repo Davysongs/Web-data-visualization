@@ -6,10 +6,19 @@ from .serializers import *
 from django.db.models import Count
 from rest_framework.views import APIView
 from rest_framework import status
+from rest_framework.filters import SearchFilter, OrderingFilter
 
 # Create your views here.
 def home(request):
     return render(request, 'home.html')
+
+class  MarketInsightListCreateAPIView(generics.ListCreateAPIView):
+   queryset = MarketInsight.objects.all()
+   serializer_class = MarketSerialiser
+   filter_backends = [SearchFilter,OrderingFilter]
+   search_fields = ['title','sector','country', 'source', 'region','insight', 'topic']
+
+
 
 '''Filters'''
 class FilterMarketInsightsView(APIView):
@@ -26,6 +35,10 @@ class FilterMarketInsightsView(APIView):
 
     # Get filtered queryset based on validated serializer data
     filtered_insights = serializer.get_queryset()
+
+    # Check if any results found
+    if not filtered_insights.exists():
+      return Response({'message': 'No matching insights found for your filters.'}, status=status.HTTP_204_NO_CONTENT)
 
     # Serialize filtered data
     serialized_data = MarketInsightSerializer(filtered_insights, many=True)

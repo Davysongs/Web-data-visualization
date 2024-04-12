@@ -8,4 +8,5 @@ urlpatterns = [
     path('api/market-insights/histogram/', MarketInsightHistogramAPIView.as_view(), name='market_insight_histogram'),
      #filters 
     path('api/filter-market-insights/', FilterMarketInsightsView.as_view(), name='market_insight_filter'),
+    path('api/market-insight/', MarketInsightListCreateAPIView.as_view(), name='search'),
 ]

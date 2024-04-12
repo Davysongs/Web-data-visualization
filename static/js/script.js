@@ -15,7 +15,7 @@ searchForm.addEventListener('submit', (event) => {
   }
 
   // Construct the API request URL with the search parameter
-  const url = new URL('/api/market-insights/filter/', window.location.origin);
+  const url = new URL('api/market-insight/', window.location.origin);
   url.searchParams.append('search', searchTerm);
 
   // Send the GET request using Fetch API

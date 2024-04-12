@@ -18,15 +18,19 @@ class MarketInsightFilterSerializer(serializers.Serializer):
         return data
 
     def get_queryset(self):
+        """
+        Override the default get_queryset method to handle potential None initial data.
+        """
         queryset = MarketInsight.objects.all()
-        filters = {key: value for key, value in self.initial.items() if value}  # Get non-empty filter values
-        for field, value in filters.items():
-            if field == 'topics':
-                queryset = queryset.filter(topic__icontains=value)  # Case-insensitive search for topics
-            else:
-                queryset = queryset.filter(
-                    **{field + '__icontains': value}  # Case-insensitive search for other fields
-                )
+        if self.initial is not None:  # Check if initial data exists
+            filters = {key: value for key, value in self.initial.items() if value}  # Get non-empty filter values
+            for field, value in filters.items():
+                if field == 'topics':
+                    queryset = queryset.filter(topic__icontains=value)  # Case-insensitive search for topics
+                else:
+                    queryset = queryset.filter(
+                        **{field + '__icontains': value}  # Case-insensitive search for other fields
+                    )
         return queryset
 
 class MarketInsightSerializer(serializers.ModelSerializer):
@@ -42,3 +46,8 @@ class MarketInsightHistogramSerializer(serializers.ModelSerializer):
     class Meta:
         model = MarketInsight
         fields = ['id', 'relevance', 'topic', 'sector'] 
+
+class MarketSerialiser(serializers.ModelSerializer):
+    class Meta:
+        model = MarketInsight
+        fields = '__all__'
